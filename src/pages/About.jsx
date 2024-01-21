@@ -1,16 +1,27 @@
+// Import React and the Navbar component
 import React from "react";
 import Navbar from "../components/navbar/Navbar";
 import "./style/about.css";
+
+// Define the About component
 function About() {
+  // Render the About component
+
   return (
     <>
+      {/* Include the Navbar component */}
       <Navbar />
+
+      {/* Main content of the About page */}
       <div>
+        {/* Title and description */}
         <h2 className="ms-5 me-3 mt-4">Welcome to Provision Store</h2>
         <p className="ms-5 me-3">
           Provision Store is an E-shop website which is a virtual provision
           marketplace where You can buy various types of provision products.
         </p>
+
+        {/* About section with folder structure and how to start project */}
         <div className="about " style={{ height: "100vh", width: "100vw" }}>
           {/*Provision-Store Folder Structure*/}
 

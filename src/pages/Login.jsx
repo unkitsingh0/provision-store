@@ -1,16 +1,24 @@
+// Import necessary modules and components
 import React, { useEffect, useState } from "react";
 import CryptoJS from "crypto-js";
 import { Toaster, toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import logo from "../images/logo.png";
+
+// Define the Login page
 function Login() {
+  // State to manage form data
   const [loginFormData, setloginFormData] = useState({
     email: "",
     password: "",
   });
+  // Navigation hook for redirecting after login
   const navigate = useNavigate();
+  // Navigation hook for redirecting after login
   const [isValidEmail, setIsValidEmail] = useState(true);
   const [isValidPassword, setIsValidPassword] = useState(true);
+
+  // Function to handle form input changes
   const formInputData = (e) => {
     const { name, value } = e.target;
     setloginFormData((prevData) => {
@@ -18,12 +26,12 @@ function Login() {
     });
   };
 
+  // Function to handle form submission
   const onFormSubmite = async (e) => {
-    //Preventing default behavior . Stoping page from reload
+    // Preventing default behavior. Stop page from reloading
     e.preventDefault();
 
-    //Checking if user has entered email and password
-
+    // Check if user has entered email and password
     if (!loginFormData.email) return toast.error("Please enter Email");
     if (!loginFormData.password) return toast.error("Please enter Password");
 
@@ -40,10 +48,11 @@ function Login() {
 
     if (!isValidPasswordCheck) return toast.error("Invalid password");
 
+    // Hash the password using SHA256
     let hashedPassword = CryptoJS.SHA256(loginFormData.password).toString(
       CryptoJS.enc.Hex
     );
-    // Prepare the payload in loginFormData format
+    // Prepare the payload in FormData format
     const formData = new FormData();
     formData.append("username", loginFormData.email);
     formData.append("password", hashedPassword);
@@ -53,14 +62,17 @@ function Login() {
       Authorization: "Basic UHJvbWlsbzpxNCE1NkBaeSN4MiRHQg==",
     };
     try {
+      //login API
       const loginApiUrl = "https://apiv2stg.promilo.com/user/oauth/token";
+
+      //Sending form data to login into app
       const response = await fetch(loginApiUrl, {
         method: "POST",
-
         body: formData,
         headers,
       });
       if (response.ok) {
+        // Handle successful login
         const data = await response.json();
 
         sessionStorage.setItem("token", data.response.access_token);
@@ -80,12 +92,17 @@ function Login() {
       return toast.error("Login failed");
     }
   };
+
+  // Check if user is already logged in
   useEffect(() => {
     const isLoggedIn = sessionStorage.getItem("isLoggedIn");
     if (isLoggedIn) return navigate("/");
   }, [navigate]);
+
+  // Render the Login component
   return (
     <div className="Login container min-vh-100 d-flex align-items-center justify-content-center flex-column ">
+      {/* Logo */}
       <img
         src={logo}
         alt="logo"
@@ -93,6 +110,8 @@ function Login() {
         className="position-absolute top-0 start-0"
       />
       <h3>Login</h3>
+
+      {/* Login form  */}
       <form
         className="border rounded p-4 w-60 h-50 bg-light"
         onSubmit={onFormSubmite}
