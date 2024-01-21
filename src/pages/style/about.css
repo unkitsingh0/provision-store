@@ -1,0 +1,53 @@
+.about {
+  display: flex;
+  justify-content: space-around;
+}
+.folderStructure {
+  margin-left: 10px;
+  padding: 10px;
+  border-radius: 16px;
+  box-shadow: 0 1px 20px rgba(91, 15, 15, 0.737);
+  overflow-y: scroll;
+}
+
+.title {
+  text-decoration: underline;
+  margin-bottom: 10px;
+}
+.components,
+.pages,
+.root-files {
+  text-align: left;
+}
+
+h2 {
+  margin-bottom: 10px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+.folder {
+  color: #1e90ff; /* Blue color for folders */
+}
+
+.file {
+  color: #2ecc71; /* Green color for files */
+}
+
+.highlightColor {
+  color: rgb(215, 215, 1);
+  /* font-weight: bolder; */
+}
+
+/* Medium screens (tablets) */
+@media only screen and (max-width: 780px) {
+  .about {
+    flex-direction: column;
+    align-items: center;
+  }
+  .folderStructure {
+    width: 80% !important;
+  }
+}
